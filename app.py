@@ -106,4 +106,20 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # <- this line fixes it
 app.run(debug=False, host='0.0.0.0', port=port, use_reloader=False)
 
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    try:
+        data = request.json
+        url = data.get('url')
+        name = data.get('name')
+        email = data.get('email')
 
+        print(f"Received request: {url}, {name}, {email}")
+
+        result = analyze_url(url)
+
+        return jsonify(result)
+
+    except Exception as e:
+        print(f"Error in /analyze route: {e}")
+        return jsonify({"error": str(e)}), 500
