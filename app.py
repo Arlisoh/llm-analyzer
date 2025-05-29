@@ -59,12 +59,12 @@ def analyze():
         url = data.get('url')
         name = data.get('name')
         email = data.get('email')
-
+        print(f"Analyzing {url} from {name} <{email}>")
         result = analyze_url(url)
         return jsonify(result)
     except Exception as e:
+        print("Analyze route failed:", str(e))
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
